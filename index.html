@@ -1,0 +1,818 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <title>Arc Stone — GRC · GRB · زخارف جبسية</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="description" content="Arch Stone — تصميم وتنفيذ GRC, GRB وزخارف جبسية — موقع رسمي" />
+  <!-- خطوط -->
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <!-- أيقونات -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    /* ============================
+       VARIABLES + RESET (جريء)
+       ============================ */
+    :root{
+      --bg: #ffffff;
+      --text: #0b0b0b;
+      --muted: #6f6f6f;
+      --gold: #d4af37;
+      --gold-2: #b78f2a;
+      --nav-h: 84px;
+      --container: 1320px;
+      --ease-fast: cubic-bezier(.17,.85,.45,1);
+      --accent-rgba: rgba(212,175,55,0.09);
+      --black: #000000;
+      --shadow-strong: 0 40px 120px rgba(3,3,3,0.25);
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%;margin:0;padding:0;font-family:"Cairo","Inter",system-ui, -apple-system;background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased}
+    img{max-width:100%;height:auto;display:block}
+    a{color:inherit;text-decoration:none}
+    button{font-family:inherit;cursor:pointer}
+
+    /* ============================
+       NAV / HEADER (لوجو 15.jpg.jpg)
+       ============================ */
+    .nav{
+      position:fixed; top:10px; right:16px; left:16px; height:var(--nav-h); display:flex; align-items:center; justify-content:space-between; z-index:9999;
+      padding:8px 16px; gap:20px;
+    }
+    .nav .brand{display:flex;align-items:center;gap:14px}
+    .brand .logo{
+      width:70px;height:70px;border-radius:14px;overflow:hidden;display:flex;align-items:center;justify-content:center;
+      background:linear-gradient(135deg,var(--gold),var(--gold-2));box-shadow:var(--shadow-strong);
+      border:2px solid rgba(255,255,255,0.06);
+    }
+    .brand .logo img{width:54px;height:54px;object-fit:contain;display:block}
+    .brand .text{display:flex;flex-direction:column}
+    .brand .text .title{font-weight:900;font-size:18px;letter-spacing:0.2px}
+    .brand .text .sub{font-size:12px;color:var(--muted)}
+    .nav-links{display:flex;gap:12px;align-items:center}
+    .nav-links a{padding:8px 12px;border-radius:12px;transition:all 200ms var(--ease-fast);font-weight:700}
+    .nav-links a:hover{background:var(--accent-rgba);transform:translateY(-3px)}
+    .cta-nav{background:transparent;border:2px solid var(--gold);color:var(--gold);padding:10px 16px;border-radius:12px;font-weight:900;box-shadow:0 10px 40px rgba(212,175,55,0.08)}
+    .hamb{display:none;font-size:20px;padding:8px;border-radius:8px;cursor:pointer;background:transparent;border:0}
+
+    /* ============================
+       HERO / FULLSCREEN BANNER (جريء وتحريك قوي)
+       ============================ */
+    .hero{
+      position:relative;width:100%;height:100vh;min-height:700px;overflow:hidden;display:flex;align-items:center;justify-content:center;
+      background:#000;
+    }
+    .slides{position:absolute;inset:0;z-index:1;filter:contrast(1.02) saturate(1.02)}
+    .slide{
+      position:absolute;inset:0;background-position:center;background-size:cover;opacity:0;transform:scale(1);transition:opacity 550ms ease, transform 9000ms linear;will-change:opacity,transform;
+      box-shadow:inset 0 0 180px rgba(0,0,0,0.25);
+    }
+    .slide.active{opacity:1;transform:scale(1.08);z-index:2;filter:brightness(1.05)}
+    .slide::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg, rgba(0,0,0,0.22) 0%, rgba(0,0,0,0.42) 60%);}
+    /* NOTE: removed blur under text (requested) */
+
+    /* hero content (heavy, bold) */
+    .hero-panel{position:relative;z-index:6;width:100%;max-width:var(--container);padding:36px;display:flex;justify-content:flex-end;align-items:center;height:100%}
+    .hero-card{pointer-events:auto;background:linear-gradient(180deg, rgba(0,0,0,0.18), rgba(0,0,0,0.22));padding:28px;border-radius:14px;color:#fff;box-shadow:var(--shadow-strong);max-width:720px;text-align:right;border:1px solid rgba(255,255,255,0.04)}
+    .hero-card .eyebrow{display:inline-block;background:rgba(255,255,255,0.03);padding:8px 14px;border-radius:999px;font-weight:900;margin-bottom:14px;letter-spacing:0.6px}
+    .hero-card h1{font-family:"Inter","Cairo";font-weight:900;font-size:clamp(30px,5.4vw,64px);margin:6px 0 12px;line-height:1.02;text-shadow:0 14px 40px rgba(0,0,0,0.6)}
+    .hero-card p.lead{margin:0 0 20px;color:rgba(255,255,255,0.95);font-size:clamp(15px,1.6vw,18px);font-weight:600}
+    .hero-actions{display:flex;gap:12px;justify-content:flex-end}
+    .btn-primary{background:linear-gradient(90deg,var(--gold),var(--gold-2));color:#071115;padding:12px 18px;border-radius:12px;font-weight:900;box-shadow:0 18px 60px rgba(167,128,38,0.14)}
+    .btn-alt{background:transparent;border:2px solid rgba(255,255,255,0.12);color:#fff;padding:10px 14px;border-radius:12px;font-weight:700}
+
+    /* text animation - stronger */
+    .fade{opacity:0;transform:translateY(18px) scale(0.99);transition:opacity 380ms var(--ease-fast), transform 420ms var(--ease-fast)}
+    .fade.show{opacity:1;transform:translateY(0) scale(1)}
+    .hero-dots{position:absolute;left:18px;bottom:28px;z-index:9;display:flex;flex-direction:column;gap:12px}
+    .dot{width:16px;height:16px;border-radius:6px;background:rgba(255,255,255,0.26);cursor:pointer;box-shadow:0 10px 30px rgba(0,0,0,0.25)}
+    .dot.active{background:var(--gold);transform:scale(1.12)}
+
+    .slide-caption{position:absolute;left:18px;bottom:110px;max-width:320px;z-index:9;color:#fff;display:none}
+    @media(min-width:1100px){ .slide-caption{display:block} }
+
+    /* ============================
+       FLOATING SOCIAL + WHATSAPP (ايقونة واتس واضحة)
+       ============================ */
+    .floating{position:fixed;right:18px;bottom:18px;z-index:99999;display:flex;flex-direction:column;gap:12px;align-items:flex-end}
+    .fab{background:#fff;border-radius:999px;padding:12px;display:flex;align-items:center;justify-content:center;box-shadow:0 18px 60px rgba(0,0,0,0.12)}
+    .fab.social{width:52px;height:52px;font-size:18px}
+    .fab.wh{background:linear-gradient(135deg,var(--gold),var(--gold-2));color:#071115;padding:10px 16px;border-radius:999px;font-weight:900;display:flex;gap:10px;align-items:center}
+    .fab.wh i{font-size:18px}
+    .fab.wh .wtext{font-weight:800;letter-spacing:0.2px}
+
+    /* ============================
+       MAIN LAYOUT (جريء)
+       ============================ */
+    main{padding-top:calc(var(--nav-h) + 14px)}
+    section{max-width:var(--container);margin:0 auto;padding:64px 20px;border-bottom:1px solid rgba(0,0,0,0.06)}
+    h2.section-title{margin:0 0 12px;font-size:24px;font-weight:800}
+    p.lead-muted{color:var(--muted);margin:0 0 18px;font-weight:600}
+
+    /* ============================
+       WHY CHOOSE / ACCORDION (مودرن جريء)
+       ============================ */
+    .why-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:22px;align-items:start}
+    .accordion{background:#fff;border-radius:14px;padding:12px;box-shadow:0 20px 80px rgba(0,0,0,0.06);border:1px solid rgba(0,0,0,0.04)}
+    .acc-item{border-bottom:1px solid rgba(0,0,0,0.04)}
+    .acc-head{display:flex;justify-content:space-between;align-items:center;padding:16px;cursor:pointer}
+    .acc-head h4{margin:0;font-weight:800}
+    .acc-body{padding:0 16px 18px 16px;display:none;color:var(--muted);line-height:1.6}
+
+    /* ============================
+       FEATURED PROJECTS (نوافذ داخل الصفحة)
+       ============================ */
+    .featured{display:grid;grid-template-columns:repeat(2,1fr);gap:22px;align-items:stretch}
+    .feat-card{background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 28px 120px rgba(0,0,0,0.10);cursor:pointer;transition:transform 260ms var(--ease-fast)}
+    .feat-card:hover{transform:translateY(-10px) rotate(-0.4deg)}
+    .feat-thumb{height:460px;background-position:center;background-size:cover}
+    .feat-meta{padding:16px}
+    .feat-meta strong{display:block;font-weight:900;font-size:18px}
+
+    /* popup detail (same-page) */
+    .project-modal{position:fixed;inset:0;background:rgba(3,3,3,0.9);display:none;align-items:center;justify-content:center;z-index:120000;padding:24px}
+    .project-modal.open{display:flex}
+    .project-inner{max-width:1150px;width:100%;max-height:92vh;overflow:auto;background:linear-gradient(180deg,#0b0b0b,#121212);border-radius:12px;padding:18px;color:#fff;position:relative;box-shadow:0 40px 140px rgba(0,0,0,0.6)}
+    .project-inner .close{position:absolute;top:16px;left:16px;background:rgba(255,255,255,0.04);border:0;padding:12px;border-radius:10px;color:#fff;cursor:pointer}
+    .project-inner .images{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
+    .project-inner h3{margin:0 0 8px;font-weight:900}
+
+    /* ============================
+       PROJECTS (المشاريع) - أقسام حسب الخامة
+       ============================ */
+    .tabs{display:flex;gap:10px;flex-wrap:wrap}
+    .tabs button{padding:10px 14px;border-radius:12px;border:1px solid rgba(0,0,0,0.06);background:transparent;cursor:pointer;font-weight:800}
+    .tabs button.active{background:var(--gold);color:#071115;border-color:var(--gold);box-shadow:0 12px 48px rgba(212,175,55,0.12)}
+    .projects-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+    .proj-card{background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 26px 100px rgba(0,0,0,0.08);cursor:pointer;transition:transform 260ms var(--ease-fast)}
+    .proj-card:hover{transform:translateY(-8px) rotate(-0.3deg)}
+    .proj-thumb{height:260px;background-position:center;background-size:cover}
+
+    /* LIGHTBOX */
+    .lightbox{position:fixed;inset:0;background:rgba(0,0,0,0.94);display:none;align-items:center;justify-content:center;z-index:130000;padding:20px}
+    .lightbox.open{display:flex}
+    .lightbox .inner{max-width:1200px;width:100%;max-height:92vh;display:flex;align-items:center;justify-content:center;position:relative}
+    .lightbox img{max-width:100%;max-height:92vh;border-radius:12px;box-shadow:0 40px 140px rgba(0,0,0,0.8)}
+    .lb-close{position:absolute;top:18px;right:18px;background:rgba(255,255,255,0.04);color:#fff;border:0;padding:12px;border-radius:10px;cursor:pointer}
+
+    /* ============================
+       CONTACT + MAP (حذف "راسلنا")
+       ============================ */
+    .contact-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+    .contact-card{background:#fff;padding:18px;border-radius:12px;box-shadow:0 20px 80px rgba(0,0,0,0.06)}
+    .map-box{border-radius:12px;overflow:hidden;box-shadow:0 20px 80px rgba(0,0,0,0.06)}
+
+    /* map quick-button */
+    .map-open{display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:12px;background:linear-gradient(90deg,var(--gold),var(--gold-2));color:#071115;font-weight:900;text-decoration:none;box-shadow:0 12px 48px rgba(167,128,38,0.12)}
+
+    /* ============================
+       FOOTER + BLACK DESIGN-BY BAR (خاص في الأسفل)
+       ============================ */
+    footer{background:#0b0b0b;color:#fff;padding:56px 18px}
+    .footer-grid{display:flex;gap:24px;max-width:var(--container);margin:0 auto;align-items:flex-start;justify-content:space-between;flex-wrap:wrap}
+    .footer-grid a{color:inherit}
+    .blackbar{background:var(--black);color:var(--gold);text-align:center;padding:20px 12px;font-weight:800;font-size:15px;letter-spacing:0.6px}
+
+    /* ============================
+       RESPONSIVE
+       ============================ */
+    @media(max-width:1100px){
+      .projects-grid{grid-template-columns:repeat(3,1fr)}
+      .projects-grid .proj-thumb{height:220px}
+      .featured{grid-template-columns:1fr}
+      .why-grid{grid-template-columns:1fr}
+      .hero-card h1{font-size:clamp(26px,6vw,44px)}
+    }
+    @media(max-width:780px){
+      .projects-grid{grid-template-columns:repeat(2,1fr)}
+      .nav-links{display:none}
+      .hamb{display:block}
+      .hero-card{width:92%}
+      .project-inner .images{grid-template-columns:1fr}
+      .contact-grid{grid-template-columns:1fr}
+    }
+    @media(max-width:420px){
+      .projects-grid{grid-template-columns:1fr}
+      .hero-card h1{font-size:20px}
+      .brand .logo{width:56px;height:56px}
+    }
+
+    /* helpers */
+    .muted{color:var(--muted)}
+    .center{text-align:center}
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <div class="nav" role="navigation" aria-label="التنقل الرئيسي">
+    <div class="brand" aria-hidden="false">
+      <div class="logo" title="Arch Stone logo">
+        <!-- اللوجو اللي طلبت: images/15.jpg.jpg -->
+        <img src="images/15.jpg.jpg" alt="Arch Stone Logo" onerror="this.style.display='none'">
+      </div>
+      <div class="text">
+        <div class="title">Arch Stone</div>
+        <div class="sub">GRC · GRB · زخارف جبسية</div>
+      </div>
+    </div>
+
+    <div class="nav-links" role="menu" aria-label="روابط">
+      <a href="#home">الرئيسية</a>
+      <a href="#about">من نحن</a>
+      <a href="#why">لماذا تختارنا</a>
+      <a href="#featured">الأعمال المميزة</a>
+      <a href="#projects">المشاريع</a>
+      <a href="#contact" class="cta-nav">تواصل</a>
+    </div>
+
+    <button class="hamb" id="hambBtn" aria-label="قائمة"><i class="fa fa-bars"></i></button>
+  </div>
+<!-- HERO -->
+<header id="home" class="hero" role="banner" aria-label="بانر Arch Stone">
+  <div class="slides" aria-hidden="false">
+    <div class="slide active" data-title="Arch Stone — إبداع يُترجم إلى فخامة" data-sub="GRC · GRB — جودة وتنفيذ احترافي" style="background-image:url('images/12.jpg.jpg')"></div>
+    <div class="slide" data-title="زخارف جبسية راقية" data-sub="تفاصيل دقيقة وتنفيذ محترف" style="background-image:url('images/11.jpg.jpg')"></div>
+    <div class="slide" data-title="واجهات وتصاميم متكاملة" data-sub="حلول واجهات مبتكرة" style="background-image:url('images/10.jpg.jpg')"></div>
+    <div class="slide" data-title="تفصيل حسب المقاس" data-sub="  دقه متناهية" style="background-image:url('images/13.jpg.jpg')"></div>
+  </div>
+
+  <div class="hero-panel" role="region" aria-label="محتوى البانر">
+    <div class="hero-card" role="article" aria-live="polite">
+      <div class="eyebrow fade" id="hb-eyebrow" style="text-decoration:none; font-family: Arial, sans-serif;">تصميم — تنفيذ — تشطيب</div>
+      <h1 class="fade show" id="hb-title" style="text-decoration:none; font-family: Arial, sans-serif;">Arch Stone — إبداع يُترجم إلى فخامة</h1>
+      <p class="lead fade show" id="hb-desc" style="text-decoration:none; font-family: Arial, sans-serif;">نفّذ مشروعك بجودة ومظهر قوي وفخم — مختصون في GRC, GRB والزخارف الجبسية.</p>
+      <div class="hero-actions">
+        <a class="btn-primary" href="#projects">شاهد المشاريع</a>
+        <a class="btn-alt" href="#contact">اطلب عرض</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-dots" id="dots" role="tablist" aria-label="اختيارات البانر"></div>
+  <div class="slide-caption" id="slideCaption" aria-hidden="true"></div>
+</header>
+ 
+
+  <!-- floating social (واتس مع ايقونة واضحة) -->
+<div class="floating" aria-hidden="false">
+  <a class="fab social" href="https://www.facebook.com/share/1Ewi2FKS8s/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+    <i class="fa-brands fa-facebook"></i>
+  </a>
+  <a class="fab social" href="https://www.instagram.com/archstone76?igsh=MWhqaTdxaWd0d3Zn" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+    <i class="fa-brands fa-instagram"></i>
+  </a>
+  <a class="fab social" href="https://www.tiktok.com/@arch.stone?_t=ZS-90i0lwBaNRH&_r=1" target="_blank" rel="noopener noreferrer" aria-label="TikTok">
+    <i class="fa-brands fa-tiktok"></i>
+  </a>
+  <a class="fab wh" href="https://wa.me/201204441650" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
+    <i class="fa-brands fa-whatsapp" style="font-size:14px"></i>
+    <span class="wtext"></span>
+  </a>
+</div>
+
+  <main>
+
+    <!-- ABOUT -->
+    <section id="about" aria-label="من نحن">
+      <h2 class="section-title">من نحن</h2>
+      <p class="lead-muted">Arch Stone خبره منذ عام 2000 في مجال المقاولات و الديكور.</p>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:center;margin-top:18px">
+        <div>
+          <p>نقدّم حلولاً متكاملة تشمل: تصميم 3D، رسومات تنفيذية، اختيار مواد ذكية، وتركيب احترافي. نركز على التفاصيل لأن التفاصيل هي اللي بتصنع الفخامة.</p>
+          <p>نتميز بالتالي:</p>
+          <ul style="margin-top:12px">
+            <li>تصميم احترافي &amp; نماذج 3D</li>
+            <li>خامات مضمونة وجودة تنفيذ عالية</li>
+            <li>متابعة ما بعد التسليم</li>
+            <li>التزام بمواعيد التسليم</li>
+            <li>فرق تنفيذ محترفة ومدربة</li>
+          </ul>
+        </div>
+        <div><img src="images/1.jpg.jpg" alt="عن Arch Stone" style="border-radius:12px;box-shadow:0 30px 120px rgba(0,0,0,0.12);width:100%"></div>
+      </div>
+    </section>
+
+    <!-- WHY CHOOSE -->
+    <section id="why" aria-label="لماذا تختارنا">
+      <h2 class="section-title">لماذا تختار Arch Stone؟</h2>
+      <p class="lead-muted">أسباب تخلّي عملائنا يثقوا فينا — جودة، التزام، وبراعة تنفيذية.</p>
+
+      <div class="why-grid" style="margin-top:18px">
+        <div class="accordion" aria-hidden="false">
+          <div class="acc-item">
+            <div class="acc-head" data-acc="1"><h4>تاريخ الشركه </h4><div><i class="fa fa-chevron-down"></i></div></div>
+            <div class="acc-body" id="acc-1">تأسست شركة ارك ستون للمقاولات والديكور منذ عام 2000م وقد حرصت منذ نشأتها
+ ان تكون متميزة بالاعمال التراثية والزخرفية ومواكبة كل ما هو جديد في هذا المجال,,,<p>
+وقد أضاف مصنع ارك ستون المتخصص في صناعة المفردات المعمارية سابقة الصب والمنسوخة 
+قدرة كبيرة على القيام بتنفيذ المشاريع الكبيرة ذات الطابع الديني والتراثي والمعماري الخاص. 
+ولذلك فقد قامت الشركة بالاستعانة بأكفأ الخبرات الهندسية والفنية
+ حتى تصبح احدى الشركات الرائدة في هذا المجال.
+</div>
+          </div>
+
+          <div class="acc-item">
+            <div class="acc-head" data-acc="2"><h4>خامات مضمونة</h4><div><i class="fa fa-chevron-down"></i></div></div>
+            <div class="acc-body" id="acc-2">نستخدم خامات معتمدة ومورّدين موثوقين ونقوم باختبارات الجودة قبل التركيب لضمان عمر طويل.</div>
+          </div>
+
+          <div class="acc-item">
+            <div class="acc-head" data-acc="3"><h4>رؤيتنا</h4><div><i class="fa fa-chevron-down"></i></div></div>
+            <div class="acc-body" id="acc-3">الاستمرار في التقدم والمحافظة على اعلى مستويات النجاح في تقديم الاعمال التراثية ومواكبة التطور العالمي لهذا التخصص
+
+.</div>
+          </div>
+
+          <div class="acc-item">
+            <div class="acc-head" data-acc="4"><h4>ماذا نقدم</h4><div><i class="fa fa-chevron-down"></i></div></div>
+            <div class="acc-body" id="acc-4">نعمل في مجال الديكور و المقاولات<p>grc,grb,<p>فايبر جلاس<p>تماثيل ,جداريات<p>واجهات<p>تصنيعgrc,grb.</div>
+          </div>
+
+          <div class="acc-item">
+            <div class="acc-head" data-acc="5"><h4>تصميم مخصص</h4><div><i class="fa fa-chevron-down"></i></div></div>
+            <div class="acc-body" id="acc-5">نقدّم تصاميم مخصصة بحسب ذوق العميل ونوفر نماذج أولية قبل التنفيذ النهائي.</div>
+          </div>
+        </div>
+
+        <div>
+          <img src="images/kk.jpg" alt="لماذا تختارنا" style="border-radius:12px;box-shadow:0 30px 120px rgba(0,0,0,0.12);width:100%">
+        </div>
+      </div>
+    </section>
+
+    <!-- FEATURED PROJECTS -->
+    <section id="featured" aria-label="الأعمال المميزة">
+      <h2 class="section-title">الأعمال المميزة</h2>
+      <p class="lead-muted">أحدث أعمالنا — اضغط لمشاهدة التفاصيل داخل نفس الصفحة.</p>
+
+      <div class="featured" style="margin-top:18px">
+        <div class="feat-card" data-project="1">
+          <div class="feat-thumb" style="background-image:url('images/12.jpg.jpg')"></div>
+          <div class="feat-meta">
+            <strong> سلسله مطاعم اسكا (بالساحل الشمالي)</strong>
+            <p class="muted" style="margin-top:8px">تصاميم مميزة</p>
+          </div>
+        </div>
+
+        <div class="feat-card" data-project="2">
+          <div class="feat-thumb" style="background-image:url('images/l2.jpg')"></div>
+          <div class="feat-meta">
+            <strong> مطعم Broccar (بالحديقه الدوليه مدينه نصر)</strong>
+            <p class="muted" style="margin-top:8px">تفاصيل GRB وتنسيق واجهات متكامل مع إضاءة مميزة.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="featured" style="margin-top:18px">
+        <div class="feat-card" data-project="3">
+          <div class="feat-thumb" style="background-image:url('images/k1.jpg')"></div>
+          <div class="feat-meta">
+            <strong> كاتدرائيه ميلاد المسيح (بالعاصمه الاداريه)</strong>
+            <p class="muted" style="margin-top:8px">تصاميم مميزة</p>
+          </div>
+        </div>
+
+        <div class="feat-card" data-project="4">
+          <div class="feat-thumb" style="background-image:url('images/v.jpg')"></div>
+          <div class="feat-meta">
+            <strong>فيلات كبار القاده</strong>
+            <p class="muted" style="margin-top:8px">تفاصيل GRB وتنسيق واجهات متكامل مع إضاءة مميزة.</p>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- Project Modal (same page details) -->
+    <div class="project-modal" id="projectModal" aria-hidden="true" role="dialog" aria-modal="true">
+      <div class="project-inner" role="document">
+        <button class="close" id="pmClose" aria-label="إغلاق"><i class="fa fa-times"></i></button>
+        <div id="projectContent">
+          <!-- يُملأ بالـ JS -->
+        </div>
+      </div>
+    </div>
+
+    <!-- PROJECTS -->
+    <section id="projects" aria-label="المشاريع">
+      <h2 class="section-title">المشاريع</h2>
+      <p class="lead-muted">عرض المشاريع موزع حسب الخامة — اختَر لمشاهدة أمثلة أعمالنا.</p>
+
+      <div class="tabs" style="margin-top:18px" role="tablist" aria-label="تبويبات المشاريع">
+        <button class="tab-btn active" data-tab="all" role="tab" aria-selected="true">الكل</button>
+        <button class="tab-btn" data-tab="grc" role="tab">GRC</button>
+        <button class="tab-btn" data-tab="grb" role="tab">GRB</button>
+        <button class="tab-btn" data-tab="plaster" role="tab">الزخارف الجبسية</button>
+      </div>
+
+      <div class="projects-grid" id="projectsGrid" style="margin-top:18px" aria-live="polite">
+        <!-- محتوى كبير ومكرر لكي يكون الملف ضخم كما طلبت -->
+        <!-- GR C examples -->
+       
+        
+        <article class="proj-card" data-type="grc" data-src="images/10.jpg.jpg" data-caption="GRC - تصميم داخلي">
+          <div class="proj-thumb" style="background-image:url('images/10.jpg.jpg')"></div>
+          <div class="meta" style="padding:14px"><strong>تصميم داخلي (GRC)</strong><div class="tag" style="margin-top:10px">GRC</div></div>
+        </article>
+
+        <!-- GRB -->
+        <article class="proj-card" data-type="grb" data-src="images/f4.jpg" data-caption="GRB - واجهة حجرية">
+          <div class="proj-thumb" style="background-image:url('images/f4.jpg')"></div>
+          <div class="meta" style="padding:14px"><strong> كوليستر مفرغ (GRB)</strong><div class="tag" style="margin-top:10px">GRB</div></div>
+        </article>
+
+        <article class="proj-card" data-type="grb" data-src="images/g.jpg" data-caption="GRB - مدخل احترافي">
+          <div class="proj-thumb" style="background-image:url('images/g.jpg')"></div>
+          <div class="meta" style="padding:14px"><strong>مدخل احترافي (GRB)</strong><div class="tag" style="margin-top:10px">GRB</div></div>
+        </article>
+
+        <!-- Plaster -->
+        <article class="proj-card" data-type="plaster" data-src="images/gb.jpg" data-caption="جبس - زخارف سقف">
+          <div class="proj-thumb" style="background-image:url('images/gb.jpg')"></div>
+          <div class="meta" style="padding:14px"><strong>زخارف سقف (جبس)</strong><div class="tag" style="margin-top:10px">جبس</div></div>
+        </article>
+
+        <!-- تكرار لزيادة المحتوى (تقدر تمسح/تبدل) -->
+        <article class="proj-card" data-type="grc" data-src="images/l.jpg" data-caption="احدث اضائات grb">
+          <div class="proj-thumb" style="background-image:url('images/l.jpg')"></div>
+          <div class="meta" style="padding:14px"><strong>احدث اضائات()</strong><div class="tag" style="margin-top:10px">grb</div></div>
+        </article>
+
+        <article class="proj-card" data-type="grb" data-src="images/f1.jpg" data-caption="تفاصيل فاخرة">
+          <div class="proj-thumb" style="background-image:url('images/f1.jpg')"></div>
+          <div class="meta" style="padding:14px"><strong>تماثيل جداريات(GRB)</strong><div class="tag" style="margin-top:10px">GRB</div></div>
+        </article>
+
+        
+        <!-- المزيد من البطاقات المكررة لكي يتخطى الطول -->
+        
+        <article class="proj-card" data-type="grb" data-src="images/f3.jpg" data-caption="مشروع إضافي 2">
+          <div class="proj-thumb" style="background-image:url('images/f3.jpg')"></div>
+          <div class="meta" style="padding:14px"><strong>villa interiors (GRB)</strong><div class="tag" style="margin-top:10px">GRB</div></div>
+        </article>
+       
+
+      </div>
+    </section>
+
+    <!-- CONTACT (تم حذف "راسلنا") -->
+    <section id="contact" aria-label="تواصل معنا">
+      <h2 class="section-title">تواصل معنا</h2>
+      <p class="lead-muted">طرق التواصل: اتصال مباشر أو واتساب، أو افتح الخريطة للموقع.</p>
+
+      <div class="contact-grid" style="margin-top:18px">
+        <div class="contact-card">
+          <h4>اتصال مباشر</h4>
+          <p class="muted">للمشروعات العاجلة اتصل على الرقم التالي:</p>
+          <p style="font-weight:900;margin:12px 0;font-size:18px">+20 120 444 1650</p>
+          <a class="btn-primary" href="tel:+201204441650">اتصل الآن</a>
+        </div>
+
+        <div class="contact-card">
+          <h4>واتساب & مواقع التواصل</h4>
+          <p class="muted">أرسل صور المكان على الواتساب أو تواصل معنا عبر صفحاتنا:</p>
+         
+           <div style="display:flex;gap:10px;align-items:center;margin-top:10px">
+            <a class="map-open" href="https://wa.me/201204441650" target="_blank" rel="noopener noreferrer"><i class="fa fa-whatsapp" style="font-size:18px"></i> واتس اب</a>
+          </div>
+          
+         <div style="display:flex;gap:10px;align-items:center;margin-top:10px">
+            <a class="map-open" href="https://sites.google.com/view/arch-stone/%D8%A7%D9%84%D8%B5%D9%81%D8%AD%D8%A9-%D8%A7%D9%84%D8%B1%D8%A6%D9%8A%D8%B3%D9%8A%D8%A9" target="_blank" rel="noopener noreferrer"><i class="fa fa-whatsapp" style="font-size:18px"></i> قدم طلبك </a>
+          </div>
+
+          <div style="margin-top:12px;display:flex;gap:10px;align-items:center">
+            <a class="fab social" href="https://www.facebook.com/share/1Ewi2FKS8s/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><i class="fa-brands fa-facebook"></i></a>
+            <a class="fab social" href="https://www.instagram.com/archstone76?igsh=MWhqaTdxaWd0d3Zn" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+            <a class="fab social" href="https://www.tiktok.com" target="_blank" rel="noopener noreferrer" aria-label="TikTok"><i class="fa-brands fa-tiktok"></i></a>
+          </div>
+        </div>
+      </div>
+
+      <div style="max-width:var(--container);margin:24px auto 0;padding:0 20px">
+        <h4 style="margin:0 0 10px">موقعنا على الخريطة</h4>
+        <p class="muted" style="margin-bottom:8px">افتح الخريطة في تطبيق Google Maps أو استخدم الإطار المدمج أدناه (يمكن استبدال embed إن رغبت).</p>
+        <div style="display:flex;gap:12px;align-items:center;margin-bottom:12px">
+          <a class="map-open" href="https://maps.app.goo.gl/Lqk17wp435pebszd6?g_st=ic" target="_blank" rel="noopener noreferrer"><i class="fa fa-map-marked-alt"></i> افتح الخريطة</a>
+          <span class="muted">أو مرر الأسفل لمعاينة الخريطة المدمجة</span>
+        </div>
+
+        <div class="map-box">
+          <!-- تعليمات: لو عندك رابط embed مباشر من خرائط جوجل استبدله هنا -->
+          <!-- سأضع iframe عام: قد يعمل أو تحتاج استبدال src بembed مباشر لموقعك -->
+          <iframe
+            src="https://www.google.com/maps?q=30.0444,31.2357&z=15&output=embed"
+            width="100%" height="420" style="border:0" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- LIGHTBOX -->
+  <div class="lightbox" id="lightbox" aria-hidden="true">
+    <div class="inner">
+      <button class="lb-close" id="lbClose" aria-label="إغلاق"><i class="fa fa-times"></i></button>
+      <img id="lbImage" src="" alt="">
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-grid">
+      <div style="max-width:420px">
+        <h3 style="margin:0 0 6px">Arch Stone</h3>
+        <div style="color:var(--muted);margin-bottom:8px">GRC · GRB · زخارف جبسية</div>
+        <div style="color:var(--muted)">خبرة ومهارة في التفاصيل المعمارية. تواصل معنا وابدأ مشروعك اليوم.</div>
+        <div style="margin-top:14px;color:var(--muted)">© <span id="year"></span> Arch Stone</div>
+      </div>
+
+      <div>
+        <h4 style="margin:0 0 6px">روابط سريعة</h4>
+        <div style="display:flex;flex-direction:column;gap:6px;margin-top:8px">
+          <a href="#projects">المشاريع</a>
+          <a href="#about">من نحن</a>
+          <a href="#why">لماذا تختارنا</a>
+          <a href="#featured">الأعمال المميزة</a>
+          <a href="#contact">تواصل</a>
+        </div>
+      </div>
+<div>
+  <h4 style="margin:0 0 6px">تابعنا</h4>
+  <div style="margin-top:10px;display:flex;gap:12px;align-items:center">
+    <a href="https://www.facebook.com/share/1Ewi2FKS8s/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+      <i class="fa-brands fa-facebook"></i>
+    </a>
+    <a href="https://www.instagram.com/archstone76?igsh=MWhqaTdxaWd0d3Zn" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+      <i class="fa-brands fa-instagram"></i>
+    </a>
+    <a href="https://www.tiktok.com/@arch.stone?_t=ZS-90qWs6DwhZX&_r=1" target="_blank" rel="noopener noreferrer" aria-label="TikTok">
+      <i class="fa-brands fa-tiktok"></i>
+    </a>
+    <a href="https://wa.me/201204441650" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
+      <i class="fa-brands fa-whatsapp"></i>
+ </a>
+    <a href="https://whatsapp.com/channel/0029Van9AqE84OmIOYOm8A12" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
+      <i class="fa-brands fa-whatsapp"></i>
+
+    </a>
+  </div>
+</div>
+  <!-- BLACK DESIGN-BY BAR (خاص في الأسفل) -->
+  <div class="blackbar">
+      Designed by soft tech company – 01221294400
+  </div>
+
+  <!-- SCRIPTS -->
+  <script>
+    // FOOTER YEAR
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // MOBILE MENU TOGGLE
+    const hamb = document.getElementById('hambBtn');
+    if(hamb){
+      hamb.addEventListener('click', ()=> {
+        const nav = document.querySelector('.nav-links');
+        if(!nav) return;
+        if(nav.style.display === 'flex'){ nav.style.display = ''; }
+        else {
+          nav.style.display = 'flex';
+          nav.style.flexDirection = 'column';
+          nav.style.position = 'absolute';
+          nav.style.top = 'calc(var(--nav-h) + 8px)';
+          nav.style.right = '18px';
+          nav.style.background = '#fff';
+          nav.style.padding = '10px';
+          nav.style.borderRadius = '12px';
+          nav.style.boxShadow = '0 18px 60px rgba(0,0,0,0.12)';
+        }
+      });
+    }
+
+    /* HERO SLIDER - أسرع وحركة أقوى */
+    const slides = Array.from(document.querySelectorAll('.slide'));
+    const dotsWrap = document.getElementById('dots');
+    const titleEl = document.getElementById('hb-title');
+    const descEl = document.getElementById('hb-desc');
+    const eyebrowEl = document.getElementById('hb-eyebrow');
+    const slideCaption = document.getElementById('slideCaption');
+    let currentSlide = 0;
+    const SLIDE_DELAY = 2400; // أسرع: 2.4s
+
+    // build dots
+    slides.forEach((s,i)=>{
+      const d = document.createElement('div');
+      d.className = 'dot' + (i===0 ? ' active' : '');
+      d.setAttribute('role','tab');
+      d.setAttribute('aria-selected', i===0 ? 'true' : 'false');
+      d.addEventListener('click', ()=> goto(i));
+      dotsWrap.appendChild(d);
+    });
+
+    function updateHeroText(i){
+      const s = slides[i];
+      const title = s.dataset.title || '';
+      const sub = s.dataset.sub || '';
+      // strong fade out then in
+      [titleEl, descEl, eyebrowEl].forEach(el => { if(el) { el.classList.remove('show'); el.style.opacity = 0; } });
+      setTimeout(()=>{
+        if(titleEl) titleEl.textContent = title;
+        if(descEl) descEl.textContent = sub;
+        [titleEl, descEl, eyebrowEl].forEach(el => { if(el) { el.classList.add('show'); el.style.opacity = 1; } });
+      }, 160);
+      if(slideCaption) slideCaption.textContent = title + " — " + sub;
+    }
+
+    function showSlide(i){
+      slides.forEach((sl, idx)=> {
+        if(idx === i){
+          sl.classList.add('active');
+        } else {
+          sl.classList.remove('active');
+        }
+      });
+      Array.from(dotsWrap.children).forEach((d, idx)=>{
+        d.classList.toggle('active', idx===i);
+        d.setAttribute('aria-selected', idx===i ? 'true' : 'false');
+      });
+      updateHeroText(i);
+    }
+
+    function nextSlide(){ currentSlide = (currentSlide + 1) % slides.length; showSlide(currentSlide); }
+    function goto(i){ currentSlide = i; showSlide(i); restartTimer(); }
+
+    let heroTimer = setInterval(nextSlide, SLIDE_DELAY);
+    function restartTimer(){ clearInterval(heroTimer); heroTimer = setInterval(nextSlide, SLIDE_DELAY); }
+
+    const heroEl = document.querySelector('.hero');
+    if(heroEl){
+      heroEl.addEventListener('mouseenter', ()=> clearInterval(heroTimer));
+      heroEl.addEventListener('mouseleave', ()=> restartTimer());
+    }
+
+    // initial reveal for hero text
+    document.addEventListener('DOMContentLoaded', ()=> {
+      setTimeout(()=> { Array.from(document.querySelectorAll('.fade')).forEach(el=> el.classList.add('show')); }, 120);
+    });
+
+    /* ACCORDION (لماذا تختارنا) */
+    Array.from(document.querySelectorAll('.acc-head')).forEach(h=>{
+      h.addEventListener('click', ()=>{
+        const id = h.dataset.acc;
+        const body = document.getElementById('acc-' + id);
+        if(!body) return;
+        const open = body.style.display === 'block';
+        // close all
+        Array.from(document.querySelectorAll('.acc-body')).forEach(b=> b.style.display = 'none');
+        Array.from(document.querySelectorAll('.acc-head i')).forEach(i=> i.style.transform = '');
+        if(!open){
+          body.style.display = 'block';
+          h.querySelector('i').style.transform = 'rotate(180deg)';
+        }
+      });
+    });
+
+    /* FEATURED PROJECTS (نافذة داخل الصفحة) */
+    const projectModal = document.getElementById('projectModal');
+    const projectContent = document.getElementById('projectContent');
+    const pmClose = document.getElementById('pmClose');
+
+    const featuredData = {
+      1:{
+        title: "مطعم اسكا الساحل",
+        intro: "كراسي و ترابيزات GRB تعطي متانه وفخامه",
+        gallery:[
+  "images/e1.jpg.jpg",
+  "images/e2.jpg.jpg",
+  "images/e3.jpg"
+],
+        details: "<p>كراسي وترابيزات من الGRBعاليه الخامه وتصميم مخصص .</p><ul><li> تصميم مخصص حسب طلبك </li><li> جوده عاليه من الخامات</li><li>نوع الخامة: GRB</li></ul>"
+      },
+      2:{
+        title: "مطعم Broccar",
+        intro: "جداريات 3D مع اضائات فخمه.",
+             gallery:[
+  "images/l1.jpg",
+  "images/l2.jpg",
+  "images/l3.jpg"
+],
+        details: "<p><h1>في مطعم Broccar</h1><P>ابدعنا في تنفيذ جداريات GRBضخمه باسلوب يجمع بين الفن و المتانه العاليه و الاضائات الحديثه.</ul>"
+      },
+      3:{
+        title: "الكاتدرائيه",
+        intro: "تصاميم مميزه من  GRC بدرجه تشطيب عاليه.",
+        gallery:[
+  "images/k2.jpg",
+  "images/k5.jpg",
+  "images/k6.jpg",
+  "images/k4.jpg"
+],
+        details: "<p><h1>نفذّت شركة Arch Stone </h1>أعمالGRC في كاتدرائية ميلاد المسيح بالعاصمة الإدارية الجديدة ,<p> أحد أبرز وأكبر المشاريع الدينية في الشرق الأوسط، بجودة عالية وتنفيذ دقيق يليق بالمكان وقيمته المعمارية."
+      },
+      4:{
+        title: "مشروع فيلات كبار القاده  ",
+        intro: "واجهات.",
+        gallery:[
+  "images/v1.jpg",
+  
+  
+],
+        details: "<p><H1>تنفيذ أعمال GRC للواجهات في مجموعة من الفلل الخاصة بكبار القادة</H1> <p>مع التركيز على أعلى معايير الجودة والدقة في التفاصيل المعمارية"
+      }
+    };
+
+    Array.from(document.querySelectorAll('.feat-card')).forEach(card=>{
+      card.addEventListener('click', ()=>{
+        const id = card.dataset.project;
+        const data = featuredData[id];
+        if(!data) return;
+        let html = '<h3 style="margin-top:0">'+ data.title +'</h3>';
+        html += '<p style="color:rgba(255,255,255,0.85)">'+ data.intro +'</p>';
+        html += '<div class="images">';
+        data.gallery.forEach(src => {
+          html += '<div style="border-radius:8px;overflow:hidden;"><img src="'+ src +'" alt="" style="width:100%;height:260px;object-fit:cover;border-radius:8px"></div>';
+        });
+        html += '</div>';
+        html += '<div style="margin-top:12px;color:rgba(255,255,255,0.92)">'+ data.details +'</div>';
+        projectContent.innerHTML = html;
+        projectModal.classList.add('open');
+        projectModal.setAttribute('aria-hidden','false');
+        document.body.style.overflow = 'hidden';
+      });
+    });
+
+    // close project modal
+    pmClose && pmClose.addEventListener('click', closeProjectModal);
+    projectModal && projectModal.addEventListener('click', (e)=> { if(e.target === projectModal) closeProjectModal(); });
+    document.addEventListener('keydown', (e)=> { if(e.key === 'Escape') closeProjectModal(); });
+    function closeProjectModal(){ projectModal.classList.remove('open'); projectModal.setAttribute('aria-hidden','true'); projectContent.innerHTML = ''; document.body.style.overflow = ''; }
+
+    /* PROJECTS TABS + LIGHTBOX */
+    const tabBtns = Array.from(document.querySelectorAll('.tab-btn'));
+    const projCards = Array.from(document.querySelectorAll('.proj-card'));
+
+    tabBtns.forEach(btn=>{
+      btn.addEventListener('click', ()=> {
+        tabBtns.forEach(b=> b.classList.remove('active'));
+        btn.classList.add('active');
+        const tab = btn.dataset.tab;
+        applyTab(tab);
+      });
+    });
+
+    function applyTab(tab){
+      projCards.forEach(c=>{
+        if(tab === 'all'){ c.style.display = ''; return; }
+        const t = c.dataset.type;
+        c.style.display = (t === tab) ? '' : 'none';
+      });
+    }
+
+    // lightbox for project cards
+    const lightbox = document.getElementById('lightbox');
+    const lbImage = document.getElementById('lbImage');
+    const lbClose = document.getElementById('lbClose');
+
+    projCards.forEach((c,i)=>{
+      c.addEventListener('click', ()=>{
+        const src = c.dataset.src || '';
+        if(!src) return;
+        lbImage.src = src;
+        lightbox.classList.add('open');
+        lightbox.setAttribute('aria-hidden','false');
+        document.body.style.overflow = 'hidden';
+      });
+    });
+
+    lbClose && lbClose.addEventListener('click', ()=> { lightbox.classList.remove('open'); lightbox.setAttribute('aria-hidden','true'); lbImage.src=''; document.body.style.overflow=''; });
+    lightbox && lightbox.addEventListener('click', (e)=> { if(e.target === lightbox) { lightbox.classList.remove('open'); lightbox.setAttribute('aria-hidden','true'); lbImage.src=''; document.body.style.overflow=''; }});
+    document.addEventListener('keydown', (e)=> { if(e.key === 'Escape'){ if(lightbox.classList.contains('open')){ lightbox.classList.remove('open'); lightbox.setAttribute('aria-hidden','true'); lbImage.src=''; document.body.style.overflow=''; } } });
+
+    /* scroll reveal (أقوى) */
+    const revealObserver = new IntersectionObserver((entries)=>{
+      entries.forEach(entry => {
+        if(entry.isIntersecting){
+          entry.target.style.transform = 'translateY(0)';
+          entry.target.style.opacity = '1';
+        }
+      });
+    }, { threshold: 0.14 });
+    Array.from(document.querySelectorAll('.feat-card, .proj-card, .acc-item, .contact-card')).forEach(el=>{
+      el.style.transition = 'transform 420ms cubic-bezier(.17,.85,.45,1), opacity 420ms cubic-bezier(.17,.85,.45,1)';
+      el.style.transform = 'translateY(28px)';
+      el.style.opacity = '0';
+      revealObserver.observe(el);
+    });
+
+    /* preload slides & project images */
+    (function preloadSlides(){
+      slides.forEach(s => {
+        const url = (s.style.backgroundImage || '').replace(/url\(["']?/, '').replace(/["']?\)/,'');
+        if(url){ const i = new Image(); i.src = url; }
+      });
+      projCards.forEach(c => { const i = new Image(); i.src = c.dataset.src; });
+    })();
+
+  </script>
+</body>
+</html>
